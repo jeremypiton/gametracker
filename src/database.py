@@ -3,7 +3,7 @@ import time
 from contextlib import contextmanager
 import mysql.connector
 from mysql.connector import Error
-from src.config import Config
+from config import Config
 
 
 def get_connection():
