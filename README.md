@@ -12,8 +12,9 @@ GameTracker est un système de pipeline ETL (Extract, Transform, Load) conçu po
 - **Git** (pour le versionnement)
 
 ### Dépendances Python
-- pandas==2.1.0
-- mysql-connector-python==8.2.0
+- pandas==2.2.0
+- mysql-connector-python==8.3.0
+- numpy==1.26.0
 
 ## Instructions de lancement
 
@@ -22,24 +23,21 @@ GameTracker est un système de pipeline ETL (Extract, Transform, Load) conçu po
    cd gametracker
    ```
 
-2. **Démarrer les services Docker :**
+2. **Démarrer les services Docker (exécution automatique du pipeline) :**
    ```bash
-   docker compose up -d
+   docker compose up --build
    ```
 
-3. **Exécuter le pipeline complet :**
-   ```bash
-   docker compose exec app bash scripts/run_pipeline.sh
-   ```
+   - Le `Dockerfile` est configuré pour lancer automatiquement `scripts/run_pipeline.sh` au démarrage du conteneur `app`.
+   - Si vous préférez démarrer les services en arrière-plan puis exécuter manuellement :
+     ```bash
+     docker compose up -d --build
+     docker compose exec app bash scripts/run_pipeline.sh
+     ```
 
-   Ce script effectue automatiquement :
-   - Attente de la disponibilité de la base de données
-   - Initialisation des tables SQL
-   - Exécution du pipeline ETL (extraction, transformation, chargement)
-   - Génération du rapport de synthèse
-
-4. **Consulter le rapport généré :**
-   Le rapport est disponible dans `data/output/rapport.txt`
+3. **Consulter le rapport généré :**
+   - Le rapport est écrit dans le dossier `output` à la racine du projet : `output/rapport.txt`.
+   - Dans le conteneur, le fichier se trouve sous `/app/output/rapport.txt`.
 
 ## Structure du projet
 
